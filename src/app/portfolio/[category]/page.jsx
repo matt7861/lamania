@@ -3,12 +3,24 @@ import styles from "./page.module.css";
 import Button from "@/components/Button/Button";
 import { items } from "./data.js";
 import Image from "next/image";
+import { notFound } from "next/navigation";
 
 const Category = ({ params }) => {
+  const getData = (cat) => {
+    const data = items[cat];
+
+    if (data) {
+      return data;
+    }
+    return notFound();
+  };
+
+  const data = getData(params.category);
+
   return (
     <div className={styles.container}>
       <h1 className={styles.catTitle}>{params.category}</h1>
-      {items.applications.map((item) => {
+      {data.map((item) => {
         return (
           <div className={styles.item} key={item.id}>
             <div className={styles.content}>
